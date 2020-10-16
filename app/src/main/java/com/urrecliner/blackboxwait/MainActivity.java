@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         TextView tv = findViewById(R.id.delayTime);
-                        tv.setText("I will be back in "+ delaySecs +" secs.");
+                        tv.setText(delaySecs +"");
                     }
                 });
 

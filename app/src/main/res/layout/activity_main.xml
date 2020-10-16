@@ -8,15 +8,39 @@
     android:background="#333"
     tools:context=".MainActivity">
 
+
+    <TextView
+        android:id="@+id/wait_for"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wait for "
+        android:textColor="#FFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/delayTime"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/delayTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
         android:textColor="#FFF"
-        android:rotation="90"
+        android:textSize="48sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/wait_for"
+        app:layout_constraintRight_toLeftOf="@id/secs"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/secs"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=" Secs. to restart"
+        android:textColor="#FFF"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/delayTime"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
