@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,14 +25,16 @@ public class MainActivity extends AppCompatActivity {
         vUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delaySecs += 11;
+                if (keyNowTime == 0)        // remote con does duplicated action ?
+                    delaySecs += 12;
             }
         });
         final ImageButton vDown = findViewById(R.id.wait_down);
         vDown.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delaySecs -= 5;
+                if (keyNowTime == 0)
+                    delaySecs -= 8;
             }
         });
 
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText(str);
                     }
                 });
+                Log.e("delaySecs"," @@ "+delaySecs);
 
                 delaySecs--;
                 if (delaySecs <= 0) {
@@ -60,4 +65,26 @@ public class MainActivity extends AppCompatActivity {
         }, 0, 1000);
     }
 
+    static long keyOldTime = 0, keyNowTime = 0;
+    @Override
+    public boolean onKeyDown(final int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            keyNowTime = System.currentTimeMillis();
+            if (keyNowTime > keyOldTime + 800) {
+                keyOldTime = keyNowTime;
+                new Timer().schedule(new TimerTask() {
+                    public void run() {
+                        if (keyNowTime == keyOldTime)
+                            delaySecs = delaySecs + 12;
+                    }
+                }, 1000);
+            }
+            else {
+                delaySecs = delaySecs - 8;
+                keyOldTime = 0;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 }
