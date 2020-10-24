@@ -60,7 +60,6 @@
         android:contentDescription=""
         android:src="@mipmap/wait_up" />
 
-
     <ImageButton
         android:id="@+id/wait_down"
         android:layout_width="60dp"
