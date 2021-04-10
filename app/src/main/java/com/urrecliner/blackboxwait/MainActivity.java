@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
                     delaySecs -= 8;
             }
         });
+        final ImageButton vExit = findViewById(R.id.exit_app);
+        vExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                exit_application();
+            }
+        });
 
 //        if (getIntent().hasExtra("delay"))
 //            delayTime = getIntent().getIntExtra("delay",4444);
@@ -51,20 +58,21 @@ public class MainActivity extends AppCompatActivity {
                         tv.setText(str);
                     }
                 });
-                Log.e("delaySecs"," @@ "+delaySecs);
 
                 delaySecs--;
-                if (delaySecs <= 0) {
-                    Intent sendIntent = getPackageManager().getLaunchIntentForPackage("com.urrecliner.blackbox");
-                    assert sendIntent != null;
-                    startActivity(sendIntent);
-                    System.exit(0);
-                    android.os.Process.killProcess(android.os.Process.myPid());
-                }
+                if (delaySecs <= 0)
+                    exit_application();
             }
         }, 0, 1000);
     }
 
+    void exit_application() {
+        Intent sendIntent = getPackageManager().getLaunchIntentForPackage("com.urrecliner.blackbox");
+        assert sendIntent != null;
+        startActivity(sendIntent);
+        System.exit(0);
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
     static long keyOldTime = 0, keyNowTime = 0;
     @Override
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
