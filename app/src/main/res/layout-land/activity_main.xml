@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/delayTime"
         android:contentDescription=""
-        android:src="@mipmap/exit_app" />
+        android:src="@mipmap/goback_app" />
 
     <TextView
         android:id="@+id/delayTime"

@@ -18,7 +18,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:contentDescription="Todo"
-        android:src="@mipmap/exit_app" />
+        android:src="@mipmap/goback_app" />
 
     <TextView
         android:id="@+id/delayTime"
