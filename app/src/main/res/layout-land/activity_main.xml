@@ -10,18 +10,18 @@
     tools:context=".MainActivity"
     tools:ignore="MissingDefaultResource">
 
-    <TextView
-        android:id="@+id/wait_for"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Wait for "
-        android:textColor="#FFF"
-        android:textSize="24sp"
+    <ImageButton
+        android:id="@+id/exit_app"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="#333"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/delayTime"
-        />
+        android:contentDescription=""
+        android:src="@mipmap/exit_app" />
+
     <TextView
         android:id="@+id/delayTime"
         android:layout_width="wrap_content"
@@ -31,7 +31,7 @@
         android:text="30"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/wait_for"
+        app:layout_constraintTop_toBottomOf="@id/exit_app"
         app:layout_constraintBottom_toTopOf="@id/secs"
         />
 
@@ -72,18 +72,6 @@
         android:contentDescription=""
         android:layout_marginBottom="16dp"
         android:src="@mipmap/wait_down" />
-
-    <ImageButton
-        android:id="@+id/exit_app"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:background="#333"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/delayTime"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription=""
-        android:src="@mipmap/exit_app" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
