@@ -3,10 +3,9 @@ package com.urrecliner.blackboxwait;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -20,43 +19,30 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         final ImageButton vUp = findViewById(R.id.wait_up);
-        vUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (keyNowTime == 0)        // remote con does duplicated action ?
-                    delaySecs += 12;
-            }
+        vUp.setOnClickListener(v -> {
+            if (keyNowTime == 0)        // remote con does duplicated action ?
+                delaySecs += 12;
         });
         final ImageButton vDown = findViewById(R.id.wait_down);
-        vDown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (keyNowTime == 0)
-                    delaySecs -= 8;
-            }
+        vDown.setOnClickListener(v -> {
+            if (keyNowTime == 0)
+                delaySecs -= 8;
         });
         final ImageButton vExit = findViewById(R.id.exit_app);
-        vExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                exit_application();
-            }
-        });
+        vExit.setOnClickListener(v -> exit_application());
 
 //        if (getIntent().hasExtra("delay"))
 //            delayTime = getIntent().getIntExtra("delay",4444);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String str = ""+delaySecs;
-                        TextView tv = findViewById(R.id.delayTime);
-                        tv.setText(str);
-                    }
+                runOnUiThread(() -> {
+                    String str = ""+delaySecs;
+                    TextView tv = findViewById(R.id.delayTime);
+                    tv.setText(str);
                 });
 
                 delaySecs--;
