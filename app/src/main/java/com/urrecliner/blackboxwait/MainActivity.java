@@ -14,7 +14,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    static int delaySecs = 42;
+    static int delaySecs = 62;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton vUp = findViewById(R.id.wait_up);
         vUp.setOnClickListener(v -> {
             if (keyNowTime == 0)        // remote con does duplicated action ?
-                delaySecs += 12;
+                delaySecs += 32;
         });
         final ImageButton vDown = findViewById(R.id.wait_down);
         vDown.setOnClickListener(v -> {
@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
         final ImageButton vExit = findViewById(R.id.exit_app);
         vExit.setOnClickListener(v -> exit_application());
 
-//        if (getIntent().hasExtra("delay"))
-//            delayTime = getIntent().getIntExtra("delay",4444);
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -55,9 +53,10 @@ public class MainActivity extends AppCompatActivity {
     void exit_application() {
         Intent sendIntent = getPackageManager().getLaunchIntentForPackage("com.urrecliner.blackbox");
         assert sendIntent != null;
+        sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(sendIntent);
-        System.exit(0);
         android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
     }
     static long keyOldTime = 0, keyNowTime = 0;
     @Override
@@ -70,12 +69,12 @@ public class MainActivity extends AppCompatActivity {
                 new Timer().schedule(new TimerTask() {
                     public void run() {
                         if (keyNowTime == keyOldTime)
-                            delaySecs = delaySecs + 12;
+                            delaySecs += 32;
                     }
                 }, 1000);
             }
             else {
-                delaySecs = delaySecs - 8;
+                delaySecs -= 8;
                 keyOldTime = 0;
             }
         }
