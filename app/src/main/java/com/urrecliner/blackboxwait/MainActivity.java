@@ -14,7 +14,7 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
-    static int delaySecs = 62;
+    static int delaySecs = 182;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,13 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ImageButton vUp = findViewById(R.id.wait_up);
         vUp.setOnClickListener(v -> {
-            if (keyNowTime == 0)        // remote con does duplicated action ?
-                delaySecs += 32;
-        });
-        final ImageButton vDown = findViewById(R.id.wait_down);
-        vDown.setOnClickListener(v -> {
-            if (keyNowTime == 0)
-                delaySecs -= 8;
+//            if (keyNowTime == 0)        // remote con does duplicated action ?
+                delaySecs += 62;
         });
         final ImageButton vExit = findViewById(R.id.exit_app);
         vExit.setOnClickListener(v -> exit_application());
@@ -44,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
                 });
 
                 delaySecs--;
-                if (delaySecs <= 0)
+                if (delaySecs < 0)
                     exit_application();
             }
         }, 0, 1000);
@@ -63,20 +58,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            keyNowTime = System.currentTimeMillis();
-            if (keyNowTime > keyOldTime + 800) {
-                keyOldTime = keyNowTime;
-                new Timer().schedule(new TimerTask() {
-                    public void run() {
-                        if (keyNowTime == keyOldTime)
-                            delaySecs += 32;
-                    }
-                }, 1000);
-            }
-            else {
-                delaySecs -= 8;
-                keyOldTime = 0;
-            }
+//            keyNowTime = System.currentTimeMillis();
+//            if (keyNowTime > keyOldTime + 800) {
+//                keyOldTime = keyNowTime;
+//                new Timer().schedule(new TimerTask() {
+//                    public void run() {
+//                        if (keyNowTime == keyOldTime)
+                            delaySecs += 62;
+//                    }
+//                }, 1000);
+//            }
         }
         return super.onKeyDown(keyCode, event);
     }

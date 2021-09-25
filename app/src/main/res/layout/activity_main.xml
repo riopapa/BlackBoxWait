@@ -54,21 +54,9 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/delayTime"
-        app:layout_constraintBottom_toTopOf="@id/wait_down"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription=""
         android:src="@mipmap/wait_up" />
 
-    <ImageButton
-        android:id="@+id/wait_down"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:background="#333"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/delayTime"
-        app:layout_constraintTop_toBottomOf="@id/wait_up"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:contentDescription=""
-        android:layout_marginBottom="16dp"
-        android:src="@mipmap/wait_down" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
