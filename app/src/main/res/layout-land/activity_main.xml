@@ -10,17 +10,19 @@
     tools:context=".MainActivity"
     tools:ignore="MissingDefaultResource">
 
-    <TextView
-        android:id="@+id/delayTime"
-        android:layout_width="wrap_content"
+    <Chronometer
+        android:id="@+id/chronometerCountDown"
+        android:countDown="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#FFF"
+        android:layout_margin="16dp"
+        android:gravity="center_horizontal"
         android:textSize="60sp"
-        android:text="180"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:textColor="#FFF"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintBottom_toTopOf="@id/comment"
         />
 
@@ -34,7 +36,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/exit_app"
-        app:layout_constraintTop_toBottomOf="@id/delayTime" />
+        app:layout_constraintTop_toBottomOf="@id/chronometerCountDown" />
 
     <ImageButton
         android:id="@+id/exit_app"
@@ -54,10 +56,10 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:background="#333"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="40dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/delayTime"
         app:layout_constraintBottom_toBottomOf="parent"
         android:contentDescription=""
         android:src="@mipmap/wait_up" />

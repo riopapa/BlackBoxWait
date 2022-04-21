@@ -1,58 +1,57 @@
 package com.urrecliner.blackboxwait;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.WindowManager;
+import android.widget.Chronometer;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    static int delaySecs = 182;
-    static long nowTime;
+    static int intSecs = 181;
+    String strSecs;
+    private Chronometer chronometerCountDown;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+        chronometerCountDown = findViewById(R.id.chronometerCountDown);
 
         final ImageButton vUp = findViewById(R.id.wait_up);
         vUp.setOnClickListener(v -> {
-//            if (keyNowTime == 0)        // remote con does duplicated action ?
-                delaySecs += 62;
+            intSecs += 61;
+            strSecs = intSecs + "";
+            chronometerCountDown.setText(strSecs);
         });
 
         final ImageButton vExit = findViewById(R.id.exit_app);
         vExit.setOnClickListener(v -> exit_application());
-        nowTime = System.currentTimeMillis();
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(() -> {
-                    long t = System.currentTimeMillis();
-                    if (t > nowTime+1000) {
-                        nowTime = nowTime + 1000;
-                        if (--delaySecs < 0)
-                            exit_application();
-                        TextView tv = findViewById(R.id.delayTime);
-                        String str = "" + delaySecs;
-                        tv.setText(str);
-                    }
-                });
-            }
-        }, 0, 1000);
+        strSecs = intSecs + "";
+        chronometerCountDown.setText(strSecs);
+        chronometerCountDown.start();
+        chronometerCountDown.setOnChronometerTickListener(chronometer -> onChronometerTickHandler());
+    }
+
+    private void onChronometerTickHandler()  {
+        if(intSecs < 1) {
+            exit_application();
+        }
+        strSecs = intSecs + "";
+        chronometerCountDown.setText(strSecs);
+        intSecs--;
     }
 
     void exit_application() {
@@ -68,7 +67,9 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            delaySecs += 63;
+            intSecs += 61;
+            strSecs = intSecs + "";
+            chronometerCountDown.setText(strSecs);
         }
         return super.onKeyDown(keyCode, event);
     }
