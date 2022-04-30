@@ -65,4 +65,30 @@
         android:src="@mipmap/wait_up" />
 
 
+    <TextView
+        android:id="@+id/temperature"
+        android:layout_width="50sp"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/celsius"
+        android:gravity="end"
+        android:textColor="#FFF"
+        android:text="40 "
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/celsius"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/temperature"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="24dp"
+        android:textColor="#FFF"
+        android:text=" °C "
+        android:textSize="16sp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,13 +2,18 @@ package com.urrecliner.blackboxwait;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.Collection;
+import java.util.concurrent.Callable;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         chronometerCountDown = findViewById(R.id.chronometerCountDown);
@@ -34,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
         final ImageButton vExit = findViewById(R.id.exit_app);
         vExit.setOnClickListener(v -> exit_application());
+        Celcius.start(getApplicationContext());
     }
 
     @Override
@@ -52,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         strSecs = intSecs + "";
         chronometerCountDown.setText(strSecs);
         intSecs--;
+        if (intSecs % 30 == 0) {
+            TextView tv = findViewById(R.id.temperature);
+            int temp = Celcius.get();
+            tv.setText(temp+"");
+            tv.setTextColor((temp>42) ? Color.RED: (temp>38) ? Color.YELLOW:Color.WHITE);
+        }
     }
 
     void exit_application() {
