@@ -12,9 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Collection;
-import java.util.concurrent.Callable;
-
 public class MainActivity extends AppCompatActivity {
 
     static int intSecs = 181;
@@ -60,9 +57,9 @@ public class MainActivity extends AppCompatActivity {
         intSecs--;
         if (intSecs % 30 == 0) {
             TextView tv = findViewById(R.id.temperature);
-            int temp = Celcius.get();
-            tv.setText(temp+"");
-            tv.setTextColor((temp>42) ? Color.RED: (temp>38) ? Color.YELLOW:Color.WHITE);
+            int celcius = Celcius.get();
+            tv.setText(celcius+"");
+            tv.setTextColor((celcius<37)? Color.WHITE:((celcius<42)? Color.YELLOW:Color.RED));
         }
     }
 
