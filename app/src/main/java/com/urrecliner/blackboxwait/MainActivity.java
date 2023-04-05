@@ -12,6 +12,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends AppCompatActivity {
 
     static int intSecs = 181;
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         chronometerCountDown.setText(strSecs);
         chronometerCountDown.start();
         chronometerCountDown.setOnChronometerTickListener(chronometer -> onChronometerTickHandler());
+        showCelcius();
     }
 
     private void onChronometerTickHandler()  {
@@ -55,12 +59,16 @@ public class MainActivity extends AppCompatActivity {
         strSecs = intSecs + "";
         chronometerCountDown.setText(strSecs);
         intSecs--;
-        if (intSecs % 30 == 0) {
-            TextView tv = findViewById(R.id.temperature);
-            int celcius = Celcius.get();
-            tv.setText(celcius+"");
-            tv.setTextColor((celcius<37)? Color.WHITE:((celcius<42)? Color.YELLOW:Color.RED));
+        if (intSecs % 20 == 0) {
+            showCelcius();
         }
+    }
+
+    private void showCelcius() {
+        TextView tv = findViewById(R.id.temperature);
+        int celcius = Celcius.get();
+        tv.setText(celcius+"");
+        tv.setTextColor((celcius<37)? Color.WHITE:((celcius<42)? Color.YELLOW:Color.RED));
     }
 
     void exit_application() {
@@ -72,13 +80,28 @@ public class MainActivity extends AppCompatActivity {
         System.exit(0);
     }
 
+    long keyOldTime = 0, keyNowTime = 0;
     @Override
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
-            intSecs += 61;
-            strSecs = intSecs + "";
-            chronometerCountDown.setText(strSecs);
+            keyNowTime = System.currentTimeMillis();
+            if (keyOldTime == 0) {  // first Time
+                keyOldTime = keyNowTime;
+                new Timer().schedule(new TimerTask() {
+                    public void run() {
+                        if (keyOldTime > 0) {
+                            intSecs += 61;
+                            strSecs = intSecs + "";
+                            chronometerCountDown.setText(strSecs);
+                        }
+                        keyOldTime = 0;
+                    }
+                }, 3000);
+            } else if (keyNowTime - keyOldTime < 2000 && keyNowTime - keyOldTime > 300) {
+                exit_application();
+            } else
+                keyOldTime = 0;
         }
         return super.onKeyDown(keyCode, event);
     }
