@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void exit_application() {
-        Intent sendIntent = getPackageManager().getLaunchIntentForPackage("com.urrecliner.blackbox");
+        Intent sendIntent = getPackageManager().getLaunchIntentForPackage("com.riopapa.blackbox");
         assert sendIntent != null;
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(sendIntent);
