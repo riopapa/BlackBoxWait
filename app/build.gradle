@@ -4,7 +4,7 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.urrecliner.blackboxwait"
+        applicationId "com.riopapa.blackwait"
         minSdkVersion 27
         targetSdkVersion 29
         versionCode 1
@@ -19,7 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    namespace 'com.urrecliner.blackboxwait'
+    namespace 'com.riopapa.blackwait'
 }
 
 dependencies {
