@@ -12,9 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class MainActivity extends AppCompatActivity {
 
     static int intSecs = 181;
@@ -37,8 +34,12 @@ public class MainActivity extends AppCompatActivity {
             chronometerCountDown.setText(strSecs);
         });
 
+        final ImageButton vReturn = findViewById(R.id.return2box);
+        vReturn.setOnClickListener(v -> reLoad_BlackBox());
+
         final ImageButton vExit = findViewById(R.id.exit_app);
-        vExit.setOnClickListener(v -> exit_application());
+        vExit.setOnClickListener(v -> exit_app());
+
         Celcius.start(getApplicationContext());
     }
 
@@ -54,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void onChronometerTickHandler()  {
         if(intSecs < 1) {
-            exit_application();
+            reLoad_BlackBox();
         }
         strSecs = intSecs + "";
         chronometerCountDown.setText(strSecs);
@@ -71,11 +72,16 @@ public class MainActivity extends AppCompatActivity {
         tv.setTextColor((celcius<37)? Color.WHITE:((celcius<42)? Color.YELLOW:Color.RED));
     }
 
-    void exit_application() {
+    void reLoad_BlackBox() {
         Intent sendIntent = getPackageManager().getLaunchIntentForPackage("com.riopapa.blackbox");
         assert sendIntent != null;
         sendIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(sendIntent);
+        android.os.Process.killProcess(android.os.Process.myPid());
+        System.exit(0);
+    }
+
+    void exit_app() {
         android.os.Process.killProcess(android.os.Process.myPid());
         System.exit(0);
     }
@@ -85,21 +91,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onKeyDown(final int keyCode, KeyEvent event) {
 
         if (keyCode == KeyEvent.KEYCODE_VOLUME_DOWN || keyCode == KeyEvent.KEYCODE_VOLUME_UP) {
+            intSecs += 61;
+            strSecs = intSecs + "";
+            chronometerCountDown.setText(strSecs);
             keyNowTime = System.currentTimeMillis();
             if (keyOldTime == 0) {  // first Time
                 keyOldTime = keyNowTime;
-                new Timer().schedule(new TimerTask() {
-                    public void run() {
-                        if (keyOldTime > 0) {
-                            intSecs += 61;
-                            strSecs = intSecs + "";
-                            chronometerCountDown.setText(strSecs);
-                        }
-                        keyOldTime = 0;
-                    }
-                }, 3000);
             } else if (keyNowTime - keyOldTime < 2000 && keyNowTime - keyOldTime > 300) {
-                exit_application();
+                reLoad_BlackBox();
             } else
                 keyOldTime = 0;
         }
